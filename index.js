@@ -1,19 +1,23 @@
-var TelegramBot = require('node-telegram-bot-api');
-var token ='#';
-var bot = new TelegramBot(token, {polling:true});
-var request = require('requests');
+const TelegramBot = require('node-telegram-bot-api');
+const token = '714938087:AAFAckovWiKhtDWVHTqY7CRb2MqRg1Ndw50';
+const bot = new TelegramBot(token, {polling: true});
 
+bot.onText(/\/start/, (msg) => {
 
-bot.onText(/\/Book (.+)/, function(msg, match) {
-    var Book = match[1];
-    var chatId = msg.chat.id;
-    request(`https://kikrogers.ml/books/api/${Book}`, fumction(error,response,body) {
-        if(!error && response.statusCode == 200) {
-            bot.sendMessage(chatId, '_Looking for' +Book+ '...', {parse_mode: 'Markdown'})
-            .then (function(msg) {
-                var res = JSON.parse(body);
-                bot.sendDocument(chatId, res.Poster, {caption: 'Result: \nTitle: ' + res.Title + '\nAuthor: ' + res.Author})
-            })
-        }
-    });
+bot.sendMessage(msg.chat.id, "Hello, Welcome Dear " + msg.from.first_name, {
+"reply_markup": {
+    "keyboard": [["Praying To Get Results By Kenneth E. Hagin", "Book2"],   ["Book3"], ["Book4"]]
+    }
+});
+
+// bot.sendDocument(msg.chat.id, "http://fgbmfinbpd.webs.com/Kenneth%20E%20Hagin%20-%20Praying%20to%20Get%20Results.pdf");
+
+});
+
+bot.on('message', (msg) => {
+
+var Book2 = "Book2";
+if (msg.text.toString().toLowerCase().includes(Book2)) {
+    bot.sendDocument(msg.chat.id, "http://fgbmfinbpd.webs.com/Kenneth%20E%20Hagin%20-%20Praying%20to%20Get%20Results.pdf");
+}
 });
